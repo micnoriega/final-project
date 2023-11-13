@@ -1,4 +1,4 @@
-# Title
+# Title: Fancy Duck
 
 ## Repository
 https://github.com/micnoriega/final-project.git
