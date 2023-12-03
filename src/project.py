@@ -59,7 +59,7 @@ def main():
     Background = SpaceBackground('exploring_space.png', [0,0])
     duck = DuckSprite()
     particles = []
-    for num in range(20):
+    for num in range(23):
         rand_pos = (random.randrange(resolution[0]+1),
                     random.randrange(resolution[1]+1))
         particles.append(Particle(pos=rand_pos))
@@ -79,12 +79,13 @@ def main():
         screen.blit(Background.image, Background.rect)
         # cat Generation
         pygame.font.init()
-        font = pygame.font.SysFont("Courier New", 20)
+        font = pygame.font.SysFont("Courier New", 28)
         screen.blit(font.render("/\\_/\\", True, (random.randrange(255), random.randrange(255), random.randrange(255))), (10, 10))
-        screen.blit(font.render(">^w^<", True, (random.randrange(255), random.randrange(255), random.randrange(255))), (10, 37))
-        screen.blit(font.render("(___)", True, (random.randrange(255), random.randrange(255), random.randrange(255))), (10, 60))
+        screen.blit(font.render(">^w^<", True, (random.randrange(255), random.randrange(255), random.randrange(255))), (10, 45))
+        screen.blit(font.render("(___)", True, (random.randrange(255), random.randrange(255), random.randrange(255))), (10, 75))
         # duck generation + movement
         duck.draw(screen)
+        # particle generation
         for particle in particles:
             particle.draw(screen)
         pygame.display.update()
