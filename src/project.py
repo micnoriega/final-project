@@ -49,13 +49,21 @@ class Particle():
 
 
 class MeteorSprite(object):
-    def __init__(self):
-        self.image = pygame.image.load("meteor.png")
-        self.x = 600
-        self.y = 300
+    def __init__(meteor):
+        meteor.image = pygame.image.load("meteor.png")
+        meteor.x = random.randint(0, 720)
+        meteor.y = 0
+        meteor.speed = 5
 
-    def draw(self, surface):
-        surface.blit(self.image, (self.x, self.y)) 
+    def movement(meteor):
+        if meteor.y < 720:
+            meteor.y += meteor.speed
+        elif meteor.y > 720:
+            meteor.x = random.randint(0,720)
+            meteor.y = 0
+
+    def draw(meteor, surface):
+        surface.blit(meteor.image, (meteor.x, meteor.y))
     
 
         
@@ -86,19 +94,23 @@ def main():
         
         #movement mechanics
         duck.movement()
+        meteor.movement()
 
         # render & display
         screen.fill([0, 0, 0])
         screen.blit(Background.image, Background.rect)
+       
         # cat Generation
         pygame.font.init()
         font = pygame.font.SysFont("Courier New", 28)
         screen.blit(font.render("/\\_/\\", True, (random.randrange(255), random.randrange(255), random.randrange(255))), (10, 10))
         screen.blit(font.render(">^w^<", True, (random.randrange(255), random.randrange(255), random.randrange(255))), (10, 45))
         screen.blit(font.render("(___)", True, (random.randrange(255), random.randrange(255), random.randrange(255))), (10, 75))
+        
         # duck generation + movement
         duck.draw(screen)
         meteor.draw(screen)
+       
         # particle generation
         for particle in particles:
             particle.draw(screen)
