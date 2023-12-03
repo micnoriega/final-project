@@ -10,22 +10,26 @@ class SpaceBackground(pygame.sprite.Sprite):
         self.rect.left, self.rect.top = location
 
 
-class DuckSprite(pygame.sprite.Sprite):
-    def __init__(self, image_file, location):
-        pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(image_file)
-        self.rect = self.image.get_rect()
-        self.rect.left, self.rect.top = location
-        self.move_x = 0
-        self.move_y = 0
+class DuckSprite(object):
+    def __init__(self):
+        self.image = pygame.image.load("duck sprite.png")
+        self.x = 0
+        self.y = 0
 
-    '''def movement(self, x, y):
-        self.move_x += x
-        self.move_y +- y
+    def movement(self):
+        keys = pygame.key.get_pressed()
+        move = 2
+        if keys[pygame.K_w]:
+            self.y -= move
+        if keys[pygame.K_a]:
+            self.x -= move
+        if keys[pygame.K_s]:
+            self.y += move
+        if keys[pygame.K_d]:
+            self.x += move
 
-    def update(self):
-        self.rect.x = self.rect.x + self.move_x
-        self.rect.y = self.rect.y + self.move_y'''
+    def draw(self, surface):
+        surface.blit(self.image, (self.x, self.y))        
 
 
         
@@ -33,17 +37,12 @@ class DuckSprite(pygame.sprite.Sprite):
 
 def main():
     pygame.init()
+    # display and background
     pygame.display.set_caption("Exploring Space :D")
     resolution = (1280, 720)
     screen = pygame.display.set_mode(resolution)
-    
-    x = 0
-    y = 0
-    width = 50
-    height = 50
-    move = 2
     Background = SpaceBackground('exploring_space.png', [0,0])
-    duck = DuckSprite('duck sprite.png', [0,0])
+    duck = DuckSprite()
     running = True
     while running:
         for event in pygame.event.get():
@@ -52,27 +51,21 @@ def main():
 
         
         #movement mechanics
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_w]:
-            y -= move
-        if keys[pygame.K_a]:
-            x -= move
-        if keys[pygame.K_s]:
-            y += move
-        if keys[pygame.K_d]:
-            x += move
+        duck.movement()
+        
 
-        # Render & Display
+        # render & display
         screen.fill([0, 0, 0])
         screen.blit(Background.image, Background.rect)
-        #Cat Generation
+        # cat Generation
         pygame.font.init()
-        font = pygame.font.SysFont("Courier New", 30)
-        screen.blit(font.render("/\\_/\\", True, (255,255,255)), (10, 10))
-        screen.blit(font.render(">^w^<", True, (255,255,255)), (10, 50))
-        screen.blit(font.render("(___)", True, (255,255,255)), (10, 90))
-        screen.blit(duck.image, duck.rect)
-        pygame.draw.rect(screen, (255,0,0), (x, y, width, height))
+        font = pygame.font.SysFont("Courier New", 20)
+        screen.blit(font.render("/\\_/\\", True, (random.randrange(255), random.randrange(255), random.randrange(255))), (10, 10))
+        screen.blit(font.render(">^w^<", True, (random.randrange(255), random.randrange(255), random.randrange(255))), (10, 37))
+        screen.blit(font.render("(___)", True, (random.randrange(255), random.randrange(255), random.randrange(255))), (10, 60))
+        # duck generation + movement
+        duck.draw(screen)
+        pygame.display.update()
         pygame.display.flip()
     pygame.quit()
 
