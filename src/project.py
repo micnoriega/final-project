@@ -47,6 +47,18 @@ class Particle():
     def draw(self, surface):
         surface.blit(self.surface, self.pos)
 
+
+class MeteorSprite(object):
+    def __init__(self):
+        self.image = pygame.image.load("meteor.png")
+        self.x = 600
+        self.y = 300
+
+    def draw(self, surface):
+        surface.blit(self.image, (self.x, self.y)) 
+    
+
+        
         
 
 
@@ -58,6 +70,7 @@ def main():
     screen = pygame.display.set_mode(resolution)
     Background = SpaceBackground('exploring_space.png', [0,0])
     duck = DuckSprite()
+    meteor = MeteorSprite()
     particles = []
     for num in range(23):
         rand_pos = (random.randrange(resolution[0]+1),
@@ -85,6 +98,7 @@ def main():
         screen.blit(font.render("(___)", True, (random.randrange(255), random.randrange(255), random.randrange(255))), (10, 75))
         # duck generation + movement
         duck.draw(screen)
+        meteor.draw(screen)
         # particle generation
         for particle in particles:
             particle.draw(screen)
