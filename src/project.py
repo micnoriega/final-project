@@ -1,6 +1,6 @@
 import pygame
 import random
-from PIL import Image
+
 
 class SpaceBackground(pygame.sprite.Sprite):
     def __init__ (self, image_file, location):
@@ -18,7 +18,7 @@ class DuckSprite(object):
 
     def movement(self):
         keys = pygame.key.get_pressed()
-        move = 2
+        move = 5
         if keys[pygame.K_w]:
             self.y -= move
         if keys[pygame.K_a]:
@@ -64,9 +64,20 @@ class MeteorSprite(object):
 
     def draw(meteor, surface):
         surface.blit(meteor.image, (meteor.x, meteor.y))
+
+
+class MeteorShower():
+    def __init__(self, screen_res):
+        self.screen_res = screen_res
+        self.particle_size = 15
+        self.birth_rate = 1
+        self.trails = []
+            
+
     
 
-        
+score = 0
+game_over = False
         
 
 
@@ -77,6 +88,7 @@ def main():
     resolution = (1280, 720)
     screen = pygame.display.set_mode(resolution)
     Background = SpaceBackground('exploring_space.png', [0,0])
+    rain = MeteorShower(screen)
     duck = DuckSprite()
     meteor = MeteorSprite()
     particles = []
@@ -95,6 +107,7 @@ def main():
         #movement mechanics
         duck.movement()
         meteor.movement()
+
 
         # render & display
         screen.fill([0, 0, 0])
