@@ -13,8 +13,8 @@ class SpaceBackground(pygame.sprite.Sprite):
 class DuckSprite(object):
     def __init__(self):
         self.image = pygame.image.load("duck sprite.png")
-        self.x = 0
-        self.y = 0
+        self.x = 600
+        self.y = 300
 
     def movement(self):
         keys = pygame.key.get_pressed()
@@ -59,27 +59,17 @@ class MeteorSprite(object):
         if meteor.y < 720:
             meteor.y += meteor.speed
         elif meteor.y > 720:
-            meteor.x = random.randint(0,720)
+            meteor.x = random.randint(0, 720)
             meteor.y = 0
 
     def draw(meteor, surface):
         surface.blit(meteor.image, (meteor.x, meteor.y))
-
-
-class MeteorShower():
-    def __init__(self, screen_res):
-        self.screen_res = screen_res
-        self.particle_size = 15
-        self.birth_rate = 1
-        self.trails = []
-            
-
-    
-
-score = 0
-game_over = False
         
 
+
+rain_over = False
+window_heigh = 1280
+window_width = 720
 
 def main():
     pygame.init()
@@ -88,7 +78,6 @@ def main():
     resolution = (1280, 720)
     screen = pygame.display.set_mode(resolution)
     Background = SpaceBackground('exploring_space.png', [0,0])
-    rain = MeteorShower(screen)
     duck = DuckSprite()
     meteor = MeteorSprite()
     particles = []
@@ -103,11 +92,19 @@ def main():
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 exit()
 
+
+        if not rain_over:
+            meteor.y += meteor.speed
+            if meteor.y > window_heigh:
+                meteor.x = random.randint(screen)
+                meteor.y = -window_width
+
+
+
         
         #movement mechanics
         duck.movement()
         meteor.movement()
-
 
         # render & display
         screen.fill([0, 0, 0])
